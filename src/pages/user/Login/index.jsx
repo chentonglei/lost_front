@@ -82,7 +82,7 @@ const Login = () => {
       <div className={styles.content}>
         <LoginForm
           logo={<img alt="logo" src="/logo.svg" />}
-          title="Ant Design"
+          title="失物招领管理系统"
           subTitle={intl.formatMessage({
             id: 'pages.layouts.userLayout.title',
           })}
