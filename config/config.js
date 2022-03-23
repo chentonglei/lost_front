@@ -184,6 +184,11 @@ export default defineConfig({
       component: './introduction',
     },
     {
+      name: 'lost',
+      path: '/lost',
+      component: './lost',
+    },
+    {
       path: '/',
       redirect: '/account',
     },

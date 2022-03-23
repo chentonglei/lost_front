@@ -50,5 +50,7 @@ export default {
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
   'menu.register': '用户管理',
+  'menu.lost': '失物管理',
+  'menu.recruit': '招领管理',
   'menu.introduction': '系统使用介绍',
 };

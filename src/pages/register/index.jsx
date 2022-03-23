@@ -8,6 +8,12 @@ import InformationModal from './components/InformationModal';
 import ImgModal from './components/ImgModal';
 
 const { Option } = Select;
+const color = {
+  审核中: 'processing',
+  审核通过: 'success',
+  审核拒绝: 'error',
+  未提交认证信息: 'geekblue',
+};
 const actionRef = {};
 
 const Userlist = () => {
@@ -17,23 +23,24 @@ const Userlist = () => {
   const [isModalVisible2, setIsModalVisible2] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
-  const handleDelete = async () => {
-    if (selectedRowKeys.length === 0) {
-      message.error('请勾选复选框!');
-    }
-    const body = {};
-    body.array = selectedRowKeys;
-    const msg = await services.deleteuser(body);
-    if (msg.result === 'true') message.success(msg.msg);
-    else message.error('删除失败!');
-    actionRef.current.reload();
-  };
   const rowSelection = {
     // selectedRowKeys,
     onChange: (_selectedRowKeys, _selectedRows) => {
       setSelectedRowKeys(_selectedRowKeys);
       setSelectedRows(_selectedRows);
     },
+  };
+  const handleDelete = async () => {
+    if (selectedRowKeys.length === 0) {
+      message.error('请勾选复选框!');
+    }
+    const body = {};
+    body.array = selectedRowKeys;
+    console.log(body);
+    const msg = await services.del(body);
+    if (msg.result === 'true') message.success(msg.msg);
+    else message.error('删除失败!');
+    actionRef.current.reload();
   };
   const handleOk = async (record) => {
     setIsModalVisible(false);
@@ -135,7 +142,21 @@ const Userlist = () => {
     {
       title: '状态',
       dataIndex: 'Re_status',
-      hideInSearch: true, // 在搜索里屏蔽
+      render: (_, record) => [
+        <Tag color={color[record.Re_status]} key={'tag'}>
+          {record.Re_status}
+        </Tag>,
+      ],
+      renderFormItem: () => {
+        return (
+          <Select allowClear>
+            <Option value="审核中">审核中</Option>
+            <Option value="审核通过">审核通过</Option>
+            <Option value="审核拒绝">审核拒绝</Option>
+            <Option value="未提交认证信息">未提交认证信息</Option>
+          </Select>
+        );
+      },
     },
     {
       title: '所属学校',

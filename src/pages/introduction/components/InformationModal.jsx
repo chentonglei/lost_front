@@ -5,7 +5,13 @@ import { UploadOutlined } from '@ant-design/icons';
 const InformationModal = (props) => {
   const [form] = Form.useForm();
   const { Option } = Select;
-  const { visible, closeHandler, onFinish } = props;
+  const { visible, closeHandler, onFinish, record } = props;
+  useEffect(() => {
+    /* 解决点edit报错 异步 跟生命周期有关 */
+    form.setFieldsValue({
+      ...record,
+    });
+  }, [visible]);
   const onOk = () => {
     console.log('okokoko');
     form.submit();
@@ -13,7 +19,7 @@ const InformationModal = (props) => {
   return (
     <div>
       <Modal
-        title="添加系统简介"
+        title={record.title ? '修改系统简介' : '添加系统简介'}
         visible={visible}
         onOk={onOk}
         onCancel={closeHandler}

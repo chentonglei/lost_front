@@ -3,7 +3,13 @@ import ip from '../../ip';
 /** 获取当前的用户 GET /api/currentUser */
 
 export async function getlist(body) {
-  return request(`${ip}/introduction/show`, {
+  return request(`${ip}/recruit/show`, {
+    method: 'POST',
+    data: body,
+  });
+}
+export async function showreturn(body) {
+  return request(`${ip}/return/show`, {
     method: 'POST',
     data: body,
   });

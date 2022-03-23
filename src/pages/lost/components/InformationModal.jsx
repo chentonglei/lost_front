@@ -1,0 +1,38 @@
+import React, { useEffect } from 'react';
+import { Descriptions, Modal } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+
+const InformationModal = (props) => {
+  const { visible, record, closeHandler, onFinish } = props;
+  return (
+    <div>
+      <Modal
+        visible={visible}
+        onOk={onFinish}
+        onCancel={closeHandler}
+        forceRender /* 预渲染 解决报错 */
+      >
+        {record ? (
+          <Descriptions title="归还信息" bordered>
+            <Descriptions.Item label="归还人id" span={3}>
+              {record.Return_people_id}
+            </Descriptions.Item>
+            <Descriptions.Item label="归还人电话" span={3}>
+              {record.Return_people_phone}
+            </Descriptions.Item>
+            <Descriptions.Item label="归还人姓名" span={3}>
+              {record.Return_people_name}
+            </Descriptions.Item>
+            <Descriptions.Item label="Order time" span={3}>
+              {record.Return_time}
+            </Descriptions.Item>
+          </Descriptions>
+        ) : (
+          '暂无归还信息'
+        )}
+      </Modal>
+    </div>
+  );
+};
+
+export default InformationModal;

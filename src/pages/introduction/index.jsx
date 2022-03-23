@@ -5,7 +5,6 @@ import { history } from 'umi';
 import * as services from './service';
 
 import InformationModal from './components/InformationModal';
-import ImgModal from './components/ImgModal';
 
 const { Option } = Select;
 const actionRef = {};
@@ -20,19 +19,37 @@ const IntroductionList = () => {
   const handleOk = async (record) => {
     setIsModalVisible(false);
     console.log(record);
-    const msg = await services.setting(record);
-    console.log(msg);
+    if (regions.title) {
+      record.Intr_id = regions.Intr_id;
+      const msg = await services.update(record);
+      if (msg.result === 'true') {
+        message.success('修改成功');
+      } else message.error('修改成功，请重试');
+    } else {
+      const msg = await services.add(record);
+      if (msg.result === 'true') {
+        message.success('添加成功');
+      } else message.error('添加成功，请重试');
+    }
     actionRef.current.reload();
-    if (msg.result === 'true') {
-      message.success('修改成功');
-      actionRef.current.reload();
-    } else message.error(msg.msg);
   };
   const addmessage = () => {
     setIsModalVisible(true);
   };
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+  const update = (record) => {
+    record.title = '修改';
+    setIsModalVisible(true);
+    setRegions(record);
+  };
+  const confirm = async (data) => {
+    const msg = await services.del(data);
+    if (msg.result === 'true') {
+      message.success('删除成功');
+    } else message.error('删除失败，请重试');
+    actionRef.current.reload();
   };
   const columns = [
     {
@@ -47,58 +64,25 @@ const IntroductionList = () => {
       title: '回答内容',
       dataIndex: 'Intr_answer',
     },
-    /* {
-      title: '操作（初始密码为123456）',
+    {
+      title: '操作',
       hideInSearch: true, // 在搜索里屏蔽
       render: (_, record) => [
         <>
-          <a onClick={() => showinformation(record)}>修改信息</a>
+          <a onClick={() => update(record)}>修改</a>
           &nbsp;&nbsp;
           <Popconfirm
-            key="update"
-            title="是否确认初始化"
+            key="delete"
+            title="是否确认删除"
             onConfirm={() => confirm(record)}
             okText="Yes"
             cancelText="No"
           >
-            <a>初始化密码</a>
+            <a>删除</a>
           </Popconfirm>
-          {record.Re_status === '审核通过' ? (
-            <>
-              &nbsp;&nbsp;
-              <Popconfirm
-                key="new"
-                title="是否确认初始化"
-                onConfirm={() => confirm2(record)}
-                okText="Yes"
-                cancelText="No"
-              >
-                <a>初始化认证</a>
-              </Popconfirm>
-            </>
-          ) : (
-            ''
-          )}
-          {record.Re_status === '审核中' ? (
-            <>
-              &nbsp;&nbsp;
-              <a onClick={() => tongyi(record)}>通过</a>&nbsp;&nbsp;
-              <a onClick={() => jujue(record)}>拒绝</a>
-            </>
-          ) : (
-            ''
-          )}
-          {record.Re_status !== '未提交认证信息' ? (
-            <>
-              &nbsp;&nbsp;
-              <a onClick={() => showimg(record)}>查看认证信息</a>
-            </>
-          ) : (
-            ''
-          )}
         </>,
       ],
-    },*/
+    },
   ];
   return (
     <>
@@ -107,7 +91,7 @@ const IntroductionList = () => {
         onReset={() => setRegions([])}
         actionRef={actionRef}
         columns={columns}
-        rowKey="Re_id"
+        rowKey="Intr_id"
         options={false}
         /*         rowSelection={rowSelection} */
         /* search={false} */
@@ -122,6 +106,7 @@ const IntroductionList = () => {
         visible={isModalVisible} // 可见型
         closeHandler={handleCancel}
         onFinish={handleOk}
+        record={regions}
       />
     </>
   );

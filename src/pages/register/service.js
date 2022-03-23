@@ -33,8 +33,8 @@ export async function doit(body) {
     data: body,
   });
 }
-export async function deleteuser(body) {
-  return request('http://47.98.122.86/api/user/cancel', {
+export async function del(body) {
+  return request(`${ip}/register/delete`, {
     method: 'POST',
     data: body,
   });
