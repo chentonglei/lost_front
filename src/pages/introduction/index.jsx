@@ -7,6 +7,11 @@ import * as services from './service';
 import InformationModal from './components/InformationModal';
 
 const { Option } = Select;
+const color = {
+  审核中: 'processing',
+  审核通过: 'success',
+  审核拒绝: 'error',
+};
 const actionRef = {};
 
 const IntroductionList = () => {

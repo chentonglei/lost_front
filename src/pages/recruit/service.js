@@ -8,6 +8,12 @@ export async function getlist(body) {
     data: body,
   });
 }
+export async function getcommentlist(body) {
+  return request(`${ip}/comment/show`, {
+    method: 'POST',
+    data: body,
+  });
+}
 export async function showreturn(body) {
   return request(`${ip}/return/show`, {
     method: 'POST',
@@ -21,7 +27,13 @@ export async function add(body) {
   });
 }
 export async function del(body) {
-  return request(`${ip}/introduction/delete`, {
+  return request(`${ip}/recruit/delete`, {
+    method: 'POST',
+    data: body,
+  });
+}
+export async function delcomment(body) {
+  return request(`${ip}/comment/delete`, {
     method: 'POST',
     data: body,
   });

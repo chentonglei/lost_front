@@ -184,9 +184,41 @@ export default defineConfig({
       component: './introduction',
     },
     {
+      name: 'school',
+      path: '/school',
+      component: './school',
+    },
+    {
       name: 'lost',
       path: '/lost',
-      component: './lost',
+      routes: [
+        {
+          path: '/lost',
+          component: './lost/index.jsx',
+        },
+        {
+          name: 'comment',
+          hideInMenu: true,
+          path: '/lost/comment',
+          component: './lost/comment.jsx',
+        },
+      ],
+    },
+    {
+      name: 'recruit',
+      path: '/recruit',
+      routes: [
+        {
+          path: '/recruit',
+          component: './recruit/index.jsx',
+        },
+        {
+          name: 'comment',
+          hideInMenu: true,
+          path: '/recruit/comment',
+          component: './recruit/comment.jsx',
+        },
+      ],
     },
     {
       path: '/',

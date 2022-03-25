@@ -6,6 +6,7 @@ import * as services from './service';
 
 import InformationModal from './components/InformationModal';
 import ImgModal from './components/ImgModal';
+import { set } from 'lodash';
 
 const { Option } = Select;
 const color = {
@@ -36,11 +37,10 @@ const Userlist = () => {
     }
     const body = {};
     body.array = selectedRowKeys;
-    console.log(body);
     const msg = await services.del(body);
     if (msg.result === 'true') message.success(msg.msg);
     else message.error('删除失败!');
-    actionRef.current.reload();
+    actionRef.current.reloadAndRest();
   };
   const handleOk = async (record) => {
     setIsModalVisible(false);
@@ -93,7 +93,7 @@ const Userlist = () => {
   };
   const jujue = async (record) => {
     // eslint-disable-next-line no-param-reassign
-    record.audit = false;
+    record.result = 'false';
     const msg = await services.doit(record);
     if (msg.result === 'true') message.success('已拒绝');
     else message.error('拒绝失败');

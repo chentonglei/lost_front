@@ -7,23 +7,24 @@ const InformationModal = (props) => {
   return (
     <div>
       <Modal
+        title="归还信息"
         visible={visible}
         onOk={onFinish}
         onCancel={closeHandler}
         forceRender /* 预渲染 解决报错 */
       >
         {record ? (
-          <Descriptions title="归还信息" bordered>
-            <Descriptions.Item label="丢物人id" span={3}>
+          <Descriptions bordered>
+            <Descriptions.Item label="归还人id" span={3}>
               {record.Return_people_id}
             </Descriptions.Item>
-            <Descriptions.Item label="丢物人电话" span={3}>
+            <Descriptions.Item label="归还人电话" span={3}>
               {record.Return_people_phone}
             </Descriptions.Item>
-            <Descriptions.Item label="丢物人姓名" span={3}>
+            <Descriptions.Item label="归还人姓名" span={3}>
               {record.Return_people_name}
             </Descriptions.Item>
-            <Descriptions.Item label="归还时间" span={3}>
+            <Descriptions.Item label="Order time" span={3}>
               {record.Return_time}
             </Descriptions.Item>
           </Descriptions>

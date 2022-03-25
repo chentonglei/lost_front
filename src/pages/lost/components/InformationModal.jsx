@@ -7,13 +7,14 @@ const InformationModal = (props) => {
   return (
     <div>
       <Modal
+        title="归还信息"
         visible={visible}
         onOk={onFinish}
         onCancel={closeHandler}
         forceRender /* 预渲染 解决报错 */
       >
         {record ? (
-          <Descriptions title="归还信息" bordered>
+          <Descriptions bordered>
             <Descriptions.Item label="归还人id" span={3}>
               {record.Return_people_id}
             </Descriptions.Item>

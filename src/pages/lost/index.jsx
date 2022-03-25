@@ -4,7 +4,7 @@ import ProTable from '@ant-design/pro-table';
 import { history } from 'umi';
 import * as services from './service';
 import InformationModal from './components/InformationModal';
-
+import ImgModal from './components/ImgModal';
 const actionRef = {};
 const color = {
   已找到: 'success',
@@ -30,11 +30,35 @@ const IntroductionList = () => {
     const msg = await services.showreturn(record);
     setRegions(msg);
   };
+  const showimg = async (record) => {
+    setIsModalVisible2(true);
+    setRegions(record);
+  };
   const handleOk = () => {
     setIsModalVisible(false);
   };
   const handleCancel = () => {
     setIsModalVisible(false);
+  };
+  const handleOk2 = () => {
+    setIsModalVisible2(false);
+  };
+  const handleCancel2 = () => {
+    setIsModalVisible2(false);
+  };
+  const showcomment = (record) => {
+    history.push({ pathname: 'lost/comment', state: { body: record } });
+  };
+  const handleDelete = async () => {
+    if (selectedRowKeys.length === 0) {
+      message.error('请勾选复选框!');
+    }
+    const body = {};
+    body.array = selectedRowKeys;
+    const msg = await services.del(body);
+    if (msg.result === 'true') message.success(msg.msg);
+    else message.error('删除失败!');
+    actionRef.current.reloadAndRest();
   };
   const columns = [
     {
@@ -71,6 +95,18 @@ const IntroductionList = () => {
       },
     },
     {
+      title: '发布人id',
+      dataIndex: 'Lost_people_id',
+    },
+    {
+      title: '发布人姓名',
+      dataIndex: 'Lost_people_name',
+    },
+    {
+      title: '发布人电话',
+      dataIndex: 'Lost_people_phone',
+    },
+    {
       title: '发布时间',
       dataIndex: 'Lost_send_time',
     },
@@ -79,7 +115,11 @@ const IntroductionList = () => {
       hideInSearch: true, // 在搜索里屏蔽
       render: (_, record) => [
         <>
+          <a onClick={() => showimg(record)}>查看失物图片</a>
+          &nbsp;&nbsp;
           <a onClick={() => showreturn(record)}>查看归还信息</a>
+          &nbsp;&nbsp;
+          <a onClick={() => showcomment(record)}>查看评论信息</a>
         </>,
       ],
     },
@@ -112,6 +152,12 @@ const IntroductionList = () => {
         visible={isModalVisible} // 可见型
         closeHandler={handleCancel}
         onFinish={handleOk}
+        record={regions}
+      />
+      <ImgModal // component 下 弹窗
+        visible={isModalVisible2} // 可见型
+        closeHandler={handleCancel2}
+        onFinish={handleOk2}
         record={regions}
       />
     </>
