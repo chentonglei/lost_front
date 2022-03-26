@@ -54,6 +54,7 @@ export default {
   'menu.lost': '失物管理',
   'menu.lost.comment': '评论管理',
   'menu.recruit': '招领管理',
+  'menu.chartimg': '系统图表',
   'menu.recruit.comment': '评论管理',
   'menu.introduction': '系统使用介绍',
 };

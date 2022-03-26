@@ -179,6 +179,11 @@ export default defineConfig({
       component: './register',
     },
     {
+      name: 'chartimg',
+      path: '/chartimg',
+      component: './chartimg',
+    },
+    {
       name: 'introduction',
       path: '/introduction',
       component: './introduction',
