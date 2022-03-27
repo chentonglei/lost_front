@@ -55,6 +55,10 @@ export default {
   'menu.lost.comment': '评论管理',
   'menu.recruit': '招领管理',
   'menu.chartimg': '系统图表',
+  'menu.chartimg.lost': '失物图表',
+  'menu.chartimg.recruit': '招领图表',
+  'menu.chartimg.return': '归还图表',
+  'menu.chartimg.comment': '评论图表',
   'menu.recruit.comment': '评论管理',
   'menu.introduction': '系统使用介绍',
 };
