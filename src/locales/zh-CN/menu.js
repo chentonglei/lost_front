@@ -2,7 +2,6 @@ export default {
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',
-  'menu.admin': '管理页',
   'menu.admin.sub-page': '二级管理页',
   'menu.login': '登录',
   'menu.register': '注册',
@@ -59,6 +58,10 @@ export default {
   'menu.chartimg.recruit': '招领图表',
   'menu.chartimg.return': '归还图表',
   'menu.chartimg.comment': '评论图表',
+  'menu.admin': '管理员',
+  'menu.admin.pwd': '管理员密码修改',
+  'menu.admin.setting': '管理员信息修改',
+  'menu.admin.add': '管理员添加',
   'menu.recruit.comment': '评论管理',
   'menu.introduction': '系统使用介绍',
 };

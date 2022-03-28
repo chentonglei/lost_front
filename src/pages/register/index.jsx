@@ -43,6 +43,7 @@ const Userlist = () => {
     actionRef.current.reloadAndRest();
   };
   const handleOk = async (record) => {
+    record.Re_power = 'user';
     setIsModalVisible(false);
     console.log(record);
     const msg = await services.setting(record);
@@ -50,7 +51,6 @@ const Userlist = () => {
     actionRef.current.reload();
     if (msg.result === 'true') {
       message.success('修改成功');
-      actionRef.current.reload();
     } else message.error(msg.msg);
   };
   const handleCancel = () => {
