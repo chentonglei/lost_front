@@ -77,14 +77,11 @@ const Register = () => {
   };
 
   const onFinish = async (values) => {
-    // eslint-disable-next-line no-param-reassign
-    values.Re_id = 123;
-    /* values.Re_id = initialState.currentUser.Re_id; */
-    const msg = await services.pwd(values);
+    const msg = await services.add(values);
     if (msg.result === 'true') {
-      message.success('修改成功');
+      message.success('添加管理员成功');
     } else {
-      message.error('修改失败');
+      message.error('添加管理员失败');
     }
     form.resetFields();
   };
@@ -146,23 +143,18 @@ const Register = () => {
         <div className={styles.main}>
           <Form form={form} name="UserRegister" onFinish={onFinish}>
             <FormItem name="Re_id">
-              <Input
-                size="large"
-                placeholder="用户ID （学号）"
-                defaultValue={123} /* {initialState.currentUser.Re_id} */
-                disabled
-              />
+              <Input size="large" placeholder="管理员ID " />
             </FormItem>
             <FormItem
-              name="Re_old_password"
+              name="Re_name"
               rules={[
                 {
                   required: true,
-                  message: '请输入旧密码',
+                  message: '请输入管理员姓名',
                 },
               ]}
             >
-              <Input size="large" type="password" placeholder="请输入旧密码" />
+              <Input size="large" placeholder="请输入管理员姓名" />
             </FormItem>
             <Popover
               getPopupContainer={(node) => {

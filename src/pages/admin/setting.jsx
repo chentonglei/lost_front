@@ -17,9 +17,10 @@ const BaseView = () => {
   }); */
 
   const handleFinish = async (values) => {
+    values.Re_power = 'admin';
     const data = await services.lisettings(values);
     if (data.result === 'true') message.success('更新基本信息成功');
-    else message.success('更新基本信息失败');
+    else message.error('更新基本信息失败');
   };
 
   return (
@@ -89,7 +90,6 @@ const BaseView = () => {
             />
             <ProFormDatePicker width="md" name="Re_age" label="年龄" placeholder="年龄" />
             <ProFormText width="md" name="Re_telephone" label="电话" />
-            <ProFormTextArea name="Re_address" label="住址" />
           </ProForm>
         </Card>
       </>

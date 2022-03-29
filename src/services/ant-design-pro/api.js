@@ -1,13 +1,20 @@
 // @ts-ignore
 
 /* eslint-disable */
+import { tokenToString } from 'typescript';
 import { request } from 'umi';
 /** 获取当前的用户 GET /api/currentUser */
-
+import ip from '../../ip';
 export async function currentUser(options) {
   return request('/api/currentUser', {
     method: 'GET',
     ...(options || {}),
+  });
+}
+export function getInfo() {
+  return request(`${ip}/register/getAdminInfo`, {
+    method: 'POST',
+    headers: { Accept: 'application/json', token: localStorage.getItem('token') },
   });
 }
 /** 退出登录接口 POST /api/login/outLogin */
