@@ -124,19 +124,9 @@ export default defineConfig({
           component: './chartimg/index.jsx',
         },
         {
-          name: 'recruit',
-          path: '/chartimg/recruit',
-          component: './chartimg/recruit.jsx',
-        },
-        {
-          name: 'return',
-          path: '/chartimg/return',
-          component: './chartimg/return.jsx',
-        },
-        {
-          name: 'comment',
-          path: '/chartimg/comment',
-          component: './chartimg/comment.jsx',
+          name: 'user',
+          path: '/chartimg/user',
+          component: './chartimg/user.jsx',
         },
       ],
     },

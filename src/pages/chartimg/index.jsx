@@ -6,14 +6,13 @@ import ip from '../../ip';
 import * as echarts from 'echarts';
 import styles from './index.less';
 import * as services from './service';
-var arr1 = new Array(24);
-for (var i = 0; i < arr1.length; i++) {
-  arr1[i] = i;
-}
 const DemoLine = () => {
   const [value, setValue] = useState('今天');
   const [point, setPoint] = useState([]);
   const [num, setNum] = useState([]);
+  const [num2, setNum2] = useState([]);
+  const [num3, setNum3] = useState([]);
+  const [num4, setNum4] = useState([]);
   useEffect(() => {
     const body = { value };
     const fetchData = async () => {
@@ -24,11 +23,35 @@ const DemoLine = () => {
       setPoint(result.point);
       setNum(result.num);
     };
+    const fetchData2 = async () => {
+      const result = await request(`${ip}/chart/recruit`, {
+        method: 'POST',
+        data: body,
+      });
+      setNum2(result.num);
+    };
+    const fetchData3 = async () => {
+      const result = await request(`${ip}/chart/comment`, {
+        method: 'POST',
+        data: body,
+      });
+      setNum3(result.num);
+    };
+    const fetchData4 = async () => {
+      const result = await request(`${ip}/chart/return`, {
+        method: 'POST',
+        data: body,
+      });
+      setNum4(result.num);
+    };
     fetchData();
+    fetchData2();
+    fetchData3();
+    fetchData4();
   }, [value]);
   useEffect(() => {
     tu();
-  }, [point, num]);
+  }, [point, num2, num3, num, num4]);
   const onChange = (e) => {
     setValue(e.target.value);
   };
@@ -39,8 +62,23 @@ const DemoLine = () => {
       tooltip: {
         trigger: 'axis',
       },
+      legend: {
+        data: ['失物', '招领', '评论', '归还'],
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+      },
+      toolbox: {
+        feature: {
+          saveAsImage: {},
+        },
+      },
       xAxis: {
         type: 'category',
+        boundaryGap: false,
         data: point,
       },
       yAxis: {
@@ -49,12 +87,24 @@ const DemoLine = () => {
       },
       series: [
         {
-          name: 'num',
-          label: {
-            show: true,
-          },
-          data: num,
+          name: '失物',
           type: 'line',
+          data: num,
+        },
+        {
+          name: '招领',
+          type: 'line',
+          data: num2,
+        },
+        {
+          name: '评论',
+          type: 'line',
+          data: num3,
+        },
+        {
+          name: '归还',
+          type: 'line',
+          data: num4,
         },
       ],
     });
@@ -99,7 +149,7 @@ const DemoLine = () => {
   ]; */
   return (
     <Card
-      title="失物信息"
+      title="失物招领情况"
       extra={
         <>
           <Radio.Group onChange={onChange} value={value}>
