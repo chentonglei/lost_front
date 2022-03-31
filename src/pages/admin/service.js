@@ -20,6 +20,13 @@ export async function add(body) {
     data: body,
   });
 }
+export function getInfo() {
+  const body = request(`${ip}/register/getAdminInfo`, {
+    method: 'POST',
+    headers: { Accept: 'application/json', token: localStorage.getItem('token') },
+  });
+  return body.data;
+}
 export async function update(body) {
   return request(`${ip}/introduction/update`, {
     method: 'POST',

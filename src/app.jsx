@@ -1,5 +1,6 @@
 import { PageLoading } from '@ant-design/pro-layout';
 import { history, Link } from 'umi';
+import { Popconfirm } from 'antd';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import * as services from './services/ant-design-pro/api';
@@ -41,10 +42,21 @@ export async function getInitialState() {
     settings: {},
   };
 } // ProLayout 支持的api https://procomponents.ant.design/components/layout
-
+const right = () => {
+  const confirm = () => {
+    history.push({ pathname: '/user/login' });
+  };
+  return (
+    <div>
+      <Popconfirm title="是否确认退出?" onConfirm={confirm} okText="Yes" cancelText="No">
+        <a>退出登录</a>
+      </Popconfirm>
+    </div>
+  );
+};
 export const layout = ({ initialState }) => {
   return {
-    rightContentRender: () => '',
+    rightContentRender: right,
     disableContentMargin: false,
     /*   waterMarkProps: {
       content: initialState?.currentUser?.name,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { message, Card } from 'antd';
 import ProForm, {
   ProFormSelect,
@@ -7,11 +7,11 @@ import ProForm, {
   ProFormDatePicker,
 } from '@ant-design/pro-form';
 import { PageContainer } from '@ant-design/pro-layout';
-import { useModel } from 'umi';
+import { useModel, request } from 'umi';
 import * as services from './service';
-
+const formRef = {};
 const BaseView = () => {
-  const { initialState } = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState');
   /*  const { data: currentUser, loading } = useRequest(() => {
     return queryCurrent();
   }); */
@@ -19,8 +19,11 @@ const BaseView = () => {
   const handleFinish = async (values) => {
     values.Re_power = 'admin';
     const data = await services.lisettings(values);
-    if (data.result === 'true') message.success('更新基本信息成功');
-    else message.error('更新基本信息失败');
+    if (data.result === 'true') {
+      message.success('更新基本信息成功');
+      setInitialState({ ...initialState, currentUser: values });
+      console.log(initialState.currentUser);
+    } else message.error('更新基本信息失败');
   };
 
   return (
@@ -29,6 +32,7 @@ const BaseView = () => {
         <Card>
           <ProForm
             layout="vertical"
+            formRef={formRef}
             onFinish={handleFinish}
             style={{
               margin: 'auto',
@@ -36,6 +40,9 @@ const BaseView = () => {
               maxWidth: 600,
             }}
             submitter={{
+              searchConfig: {
+                submitText: '修改',
+              },
               resetButtonProps: {
                 style: {
                   display: 'none',
@@ -45,7 +52,6 @@ const BaseView = () => {
                 children: '更新基本信息',
               },
             }}
-            /* initialValues={{ ...currentUser, phone: currentUser?.phone.split('-') }} */
             initialValues={{ ...initialState.currentUser }}
             hideRequiredMark
           >

@@ -35,6 +35,7 @@ const Login = () => {
 
   const fetchUserInfo = async () => {
     const userInfo = await initialState.fetchUserInfo();
+    console.log(userInfo);
     if (userInfo) {
       //initialState.currentUser为登录用户数据
       await setInitialState((s) => ({ ...s, currentUser: userInfo }));
