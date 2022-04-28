@@ -13,7 +13,7 @@ const color = {
   审核中: 'processing',
   审核通过: 'success',
   审核拒绝: 'error',
-  未提交认证信息: 'geekblue',
+  未提交: 'geekblue',
 };
 const actionRef = {};
 
@@ -153,7 +153,7 @@ const Userlist = () => {
             <Option value="审核中">审核中</Option>
             <Option value="审核通过">审核通过</Option>
             <Option value="审核拒绝">审核拒绝</Option>
-            <Option value="未提交认证信息">未提交认证信息</Option>
+            <Option value="未提交">未提交</Option>
           </Select>
         );
       },
@@ -208,7 +208,7 @@ const Userlist = () => {
           ) : (
             ''
           )}
-          {record.Re_status !== '未提交认证信息' ? (
+          {record.Re_status !== '未提交' ? (
             <>
               &nbsp;&nbsp;
               <a onClick={() => showimg(record)}>查看认证信息</a>

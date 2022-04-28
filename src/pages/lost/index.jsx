@@ -18,6 +18,7 @@ const IntroductionList = () => {
   const [isModalVisible2, setIsModalVisible2] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
+
   const rowSelection = {
     // selectedRowKeys,
     onChange: (_selectedRowKeys, _selectedRows) => {
