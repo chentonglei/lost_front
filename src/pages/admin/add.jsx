@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Form, Button, Col, Input, Popover, Progress, Row, Select, message, Card } from 'antd';
-import { Link, useRequest, history, useModel } from 'umi';
+import { Link, useRequest, history, useModel, request } from 'umi';
 import { register } from './service';
 import { PageContainer } from '@ant-design/pro-layout';
 import styles from './index.less';
 import * as services from './service';
+import ip from '../../ip';
 
 const FormItem = Form.Item;
 
@@ -39,6 +40,16 @@ const Register = () => {
   const [visible, setVisible] = useState(false);
   const [prefix, setPrefix] = useState('86');
   const [popover, setPopover] = useState(false);
+  const [body, setBody] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await request(`${ip}/school/UserShow`, {
+        method: 'POST',
+      });
+      setBody(result.data);
+    };
+    fetchData();
+  }, []);
   const confirmDirty = false;
   let interval;
   const [form] = Form.useForm();
@@ -77,6 +88,15 @@ const Register = () => {
   };
 
   const onFinish = async (values) => {
+    if (values.Re_school_id === 'all') values.Re_school_id = null;
+    else {
+      for (let i = 0; i < body.length; i++) {
+        if (body[i].Sch_id == values.Re_school_id) {
+          values.Re_school_name = body[i].Sch_name;
+        }
+      }
+    }
+    console.log(values);
     const msg = await services.add(values);
     if (msg.result === 'true') {
       message.success('添加管理员成功');
@@ -142,8 +162,34 @@ const Register = () => {
       <Card>
         <div className={styles.main}>
           <Form form={form} name="UserRegister" onFinish={onFinish}>
-            <FormItem name="Re_id">
-              <Input size="large" placeholder="管理员ID " />
+            <FormItem
+              name="Re_school_id"
+              rules={[
+                {
+                  required: true,
+                  message: '请选择管理员权限',
+                },
+              ]}
+            >
+              <Select placeholder="管理员权限">
+                <Select.Option value="all">最高权限管理员</Select.Option>
+                {body?.map((item) => (
+                  <Select.Option values={item.Sch_id} key={item.Sch_id}>
+                    {item.Sch_name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </FormItem>
+            <FormItem
+              name="Re_id"
+              rules={[
+                {
+                  required: true,
+                  message: '请输入管理员ID',
+                },
+              ]}
+            >
+              <Input size="large" placeholder="请输入管理员ID " />
             </FormItem>
             <FormItem
               name="Re_name"
@@ -155,6 +201,18 @@ const Register = () => {
               ]}
             >
               <Input size="large" placeholder="请输入管理员姓名" />
+            </FormItem>
+            <FormItem
+              name="Re_telephone"
+              rules={[
+                {
+                  required: true,
+                  message: '请输入管理员电话',
+                  pattern: /^(1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8})$/,
+                },
+              ]}
+            >
+              <Input size="large" placeholder="请输入管理员电话" />
             </FormItem>
             <Popover
               getPopupContainer={(node) => {

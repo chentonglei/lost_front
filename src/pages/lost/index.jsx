@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Popconfirm, Alert, message, Cascader, Form, Select, Tag } from 'antd';
 import ProTable from '@ant-design/pro-table';
-import { history } from 'umi';
+import { history, useModel } from 'umi';
 import * as services from './service';
 import InformationModal from './components/InformationModal';
 import ImgModal from './components/ImgModal';
@@ -18,7 +18,7 @@ const IntroductionList = () => {
   const [isModalVisible2, setIsModalVisible2] = useState(false);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
-
+  const { initialState, setInitialState } = useModel('@@initialState');
   const rowSelection = {
     // selectedRowKeys,
     onChange: (_selectedRowKeys, _selectedRows) => {
@@ -147,7 +147,9 @@ const IntroductionList = () => {
             <a>删除失物</a>
           </Popconfirm>
         )}
-        request={(params) => services.getlist(params)}
+        request={(params) =>
+          services.getlist({ ...params, school_id: initialState.currentUser.Re_school_id })
+        }
       />
       <InformationModal // component 下 弹窗
         visible={isModalVisible} // 可见型

@@ -86,11 +86,13 @@ export default defineConfig({
     {
       name: 'introduction',
       path: '/introduction',
+      access: 'canAdmin',
       component: './introduction',
     },
     {
       name: 'school',
       path: '/school',
+      access: 'canAdmin',
       component: './school',
     },
     {
@@ -101,6 +103,7 @@ export default defineConfig({
     {
       name: 'chartimg',
       path: '/chartimg',
+      access: 'canAdmin',
       routes: [
         {
           path: '/chartimg',
@@ -121,6 +124,7 @@ export default defineConfig({
     {
       name: 'admin',
       path: '/admin',
+      access: 'canAdmin',
       routes: [
         {
           path: '/admin',

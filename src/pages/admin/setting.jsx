@@ -18,10 +18,11 @@ const BaseView = () => {
 
   const handleFinish = async (values) => {
     values.Re_power = 'admin';
+    var user = initialState.currentUser;
     const data = await services.lisettings(values);
     if (data.result === 'true') {
       message.success('更新基本信息成功');
-      setInitialState({ ...initialState, currentUser: values });
+      setInitialState({ ...initialState, currentUser: { ...user, ...values } });
       console.log(initialState.currentUser);
     } else message.error('更新基本信息失败');
   };
