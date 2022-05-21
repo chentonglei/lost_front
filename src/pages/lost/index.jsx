@@ -7,8 +7,9 @@ import InformationModal from './components/InformationModal';
 import ImgModal from './components/ImgModal';
 const actionRef = {};
 const color = {
+  审核中: 'processing',
   已找到: 'success',
-  未找到: 'error',
+  审核拒绝: 'error',
 };
 const { Option } = Select;
 const IntroductionList = () => {
@@ -61,6 +62,22 @@ const IntroductionList = () => {
     else message.error('删除失败!');
     actionRef.current.reloadAndRest();
   };
+  const tongyi = async (record) => {
+    // eslint-disable-next-line no-param-reassign
+    record.result = 'true';
+    const msg = await services.doit(record);
+    if (msg.result === 'true') message.success('已通过');
+    else message.error('通过失败');
+    actionRef.current.reload();
+  };
+  const jujue = async (record) => {
+    // eslint-disable-next-line no-param-reassign
+    record.result = 'false';
+    const msg = await services.doit(record);
+    if (msg.result === 'true') message.success('已拒绝');
+    else message.error('拒绝失败');
+    actionRef.current.reload();
+  };
   const columns = [
     {
       title: '失物id',
@@ -89,6 +106,8 @@ const IntroductionList = () => {
       renderFormItem: () => {
         return (
           <Select allowClear>
+            <Option value="审核中">审核中</Option>
+            <Option value="审核拒绝">审核拒绝</Option>
             <Option value="已找到">已找到</Option>
             <Option value="未找到">未找到</Option>
           </Select>
@@ -116,11 +135,20 @@ const IntroductionList = () => {
       hideInSearch: true, // 在搜索里屏蔽
       render: (_, record) => [
         <>
-          <a onClick={() => showimg(record)}>查看失物图片</a>
+          <a onClick={() => showimg(record)}>失物图片</a>
           &nbsp;&nbsp;
-          <a onClick={() => showreturn(record)}>查看归还信息</a>
+          <a onClick={() => showreturn(record)}>归还信息</a>
           &nbsp;&nbsp;
-          <a onClick={() => showcomment(record)}>查看评论信息</a>
+          <a onClick={() => showcomment(record)}>评论信息</a>
+          {record.Lost_status === '审核中' ? (
+            <>
+              &nbsp;&nbsp;
+              <a onClick={() => tongyi(record)}>通过</a>&nbsp;&nbsp;
+              <a onClick={() => jujue(record)}>拒绝</a>
+            </>
+          ) : (
+            ''
+          )}
         </>,
       ],
     },

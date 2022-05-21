@@ -7,7 +7,7 @@ import * as echarts from 'echarts';
 import styles from './index.less';
 import * as services from './service';
 const DemoLine = () => {
-  const [value, setValue] = useState('今天');
+  const [value, setValue] = useState('近一年');
   const [point, setPoint] = useState([]);
   const [num, setNum] = useState([]);
   const [num2, setNum2] = useState([]);

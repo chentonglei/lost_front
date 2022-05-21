@@ -24,7 +24,7 @@ const InformationModal = (props) => {
             <Descriptions.Item label="归还人姓名" span={3}>
               {record.Return_people_name}
             </Descriptions.Item>
-            <Descriptions.Item label="Order time" span={3}>
+            <Descriptions.Item label="归还时间" span={3}>
               {record.Return_time}
             </Descriptions.Item>
           </Descriptions>

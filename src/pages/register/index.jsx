@@ -6,6 +6,8 @@ import * as services from './service';
 
 import InformationModal from './components/InformationModal';
 import ImgModal from './components/ImgModal';
+import ExcelImportButton from './components/ExcelImportButton';
+import ExcelImportModal from './components/ExcelImportModal';
 import { set } from 'lodash';
 
 const { Option } = Select;
@@ -16,7 +18,10 @@ const color = {
   未提交: 'geekblue',
 };
 const actionRef = {};
-
+const BanSongSourceKeyMap = {
+  账号: `Re_id`,
+  姓名: 'Re_name',
+};
 const Userlist = () => {
   // 删除记录
   const [regions, setRegions] = useState([]);
@@ -232,6 +237,30 @@ const Userlist = () => {
         options={false}
         rowSelection={rowSelection}
         /* search={false} */
+        toolBarRender={() => [
+          <Alert
+            message="请下载模板文件进行导入；导入文件格式为.xls或xlsx,字段全是必填。信息不超过五百条超过和重复部分将自动截取。"
+            type="warning"
+            key="showinfo"
+          />,
+          <Button key="href">
+            <a
+              href="http://testcdn.iot.evideocloud.com.cn/song-source/20220521/%E6%89%B9%E9%87%8F%E5%AE%A1%E6%A0%B8%E6%A8%A1%E6%9D%BF.xls"
+              download
+            >
+              批量审核模板下载
+            </a>
+          </Button>,
+          <ExcelImportButton
+            key="into"
+            KeyMap={BanSongSourceKeyMap}
+            reload={() => actionRef.current.reload()}
+            saveService={services.doits}
+            ExcelImportModal={ExcelImportModal}
+          >
+            批量审核导入
+          </ExcelImportButton>,
+        ]}
         tableAlertOptionRender={() => (
           <Popconfirm
             key="makesure"

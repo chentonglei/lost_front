@@ -44,3 +44,9 @@ export async function update(body) {
     data: body,
   });
 }
+export async function doit(body) {
+  return request(`${ip}/lost/doit`, {
+    method: 'POST',
+    data: body,
+  });
+}

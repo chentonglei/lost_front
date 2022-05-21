@@ -15,16 +15,16 @@ const InformationModal = (props) => {
       >
         {record ? (
           <Descriptions bordered>
-            <Descriptions.Item label="归还人id" span={3}>
+            <Descriptions.Item label="失主id" span={3}>
               {record.Return_people_id}
             </Descriptions.Item>
-            <Descriptions.Item label="归还人电话" span={3}>
+            <Descriptions.Item label="失主电话" span={3}>
               {record.Return_people_phone}
             </Descriptions.Item>
-            <Descriptions.Item label="归还人姓名" span={3}>
+            <Descriptions.Item label="失主姓名" span={3}>
               {record.Return_people_name}
             </Descriptions.Item>
-            <Descriptions.Item label="Order time" span={3}>
+            <Descriptions.Item label="归还时间" span={3}>
               {record.Return_time}
             </Descriptions.Item>
           </Descriptions>

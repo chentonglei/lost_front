@@ -8,8 +8,9 @@ import ImgModal from './components/ImgModal';
 
 const actionRef = {};
 const color = {
+  审核中: 'processing',
   已归还: 'success',
-  未归还: 'error',
+  审核拒绝: 'error',
 };
 const { Option } = Select;
 const IntroductionList = () => {
@@ -62,6 +63,22 @@ const IntroductionList = () => {
   const showcomment = (record) => {
     history.push({ pathname: 'recruit/comment', state: { body: record } });
   };
+  const tongyi = async (record) => {
+    // eslint-disable-next-line no-param-reassign
+    record.result = 'true';
+    const msg = await services.doit(record);
+    if (msg.result === 'true') message.success('已通过');
+    else message.error('通过失败');
+    actionRef.current.reload();
+  };
+  const jujue = async (record) => {
+    // eslint-disable-next-line no-param-reassign
+    record.result = 'false';
+    const msg = await services.doit(record);
+    if (msg.result === 'true') message.success('已拒绝');
+    else message.error('拒绝失败');
+    actionRef.current.reload();
+  };
   const columns = [
     {
       title: '招领id',
@@ -90,6 +107,8 @@ const IntroductionList = () => {
       renderFormItem: () => {
         return (
           <Select allowClear>
+            <Option value="审核中">审核中</Option>
+            <Option value="审核拒绝">审核拒绝</Option>
             <Option value="已归还">已归还</Option>
             <Option value="未归还">未归还</Option>
           </Select>
@@ -117,11 +136,20 @@ const IntroductionList = () => {
       hideInSearch: true, // 在搜索里屏蔽
       render: (_, record) => [
         <>
-          <a onClick={() => showimg(record)}>查看招领图片</a>
+          <a onClick={() => showimg(record)}>招领图片</a>
           &nbsp;&nbsp;
-          <a onClick={() => showreturn(record)}>查看归还信息</a>
+          <a onClick={() => showreturn(record)}>归还信息</a>
           &nbsp;&nbsp;
-          <a onClick={() => showcomment(record)}>查看评论信息</a>
+          <a onClick={() => showcomment(record)}>评论信息</a>
+          {record.Rec_status === '审核中' ? (
+            <>
+              &nbsp;&nbsp;
+              <a onClick={() => tongyi(record)}>通过</a>&nbsp;&nbsp;
+              <a onClick={() => jujue(record)}>拒绝</a>
+            </>
+          ) : (
+            ''
+          )}
         </>,
       ],
     },

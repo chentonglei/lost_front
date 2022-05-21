@@ -39,3 +39,9 @@ export async function del(body) {
     data: body,
   });
 }
+export async function doits(body) {
+  return request(`${ip}/register/doits`, {
+    method: 'POST',
+    data: body,
+  });
+}
