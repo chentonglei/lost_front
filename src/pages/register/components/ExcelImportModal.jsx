@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { message, Modal, Table, Select, Cascader, Form } from 'antd';
+import { useModel, request } from 'umi';
 
 const { Column } = Table;
 
@@ -15,6 +16,7 @@ const ExcelImportModal = ({
 }) => {
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [regions, setRegions] = useState([]);
+  const { initialState, setInitialState } = useModel('@@initialState');
   useEffect(() => {
     // 将必填字段为空的数据过滤掉
     console.log(excelData);
@@ -34,7 +36,7 @@ const ExcelImportModal = ({
   // 确认保存
   const onConfirm = async () => {
     setConfirmLoading(true);
-    /*   const song_list = [];
+    /*       const song_list = [];
     for (let i = 0; i < excelData.length; i++) {
       // eslint-disable-next-line no-const-assign
       song_list.push(excelData[i].song_id_list);
@@ -42,11 +44,16 @@ const ExcelImportModal = ({
     const song = {
       region_code: regions[0],
       song_id_list: song_list,
-    };
-    const { data } = await saveService(song);
-    if (data.errorcode === 0) {
-      message.success('添加成功！');
-    } */
+    }; */
+    const data = await saveService({
+      excelData,
+      Re_school_id: initialState.currentUser.Re_school_id,
+    });
+    if (data.status === 'false') {
+      message.error('请检查数据是否正确！');
+    } else {
+      message.success(data.str);
+    }
     setConfirmLoading(false);
     reload();
     onCancel();
