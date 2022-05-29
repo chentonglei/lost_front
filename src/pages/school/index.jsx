@@ -28,8 +28,9 @@ const IntroductionList = () => {
     setIsModalVisible2(false);
   };
   const showimg = (record) => {
-    setIsModalVisible2(true);
     setRegions(record);
+    console.log(record);
+    setIsModalVisible2(true);
   };
   const confirm = async (data) => {
     const msg = await services.del(data);

@@ -12,10 +12,10 @@ const UserModal = (props) => {
         onCancel={closeHandler}
         forceRender /* 预渲染 解决报错 */
       >
-        {record.Sch_documents !== '' ? (
+        {record.Sch_documents ? (
           <img style={{ width: 450 }} src={record.Sch_documents} />
         ) : (
-          '暂无'
+          '暂无认证图片'
         )}
       </Modal>
     </div>

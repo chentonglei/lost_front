@@ -15,7 +15,7 @@ export async function add(body) {
   });
 }
 export async function del(body) {
-  return request(`${ip}/introduction/delete`, {
+  return request(`${ip}/school/delete`, {
     method: 'POST',
     data: body,
   });
